@@ -26,25 +26,48 @@ import (
 
 type Cell uint64
 
-func (c *Cell) String() string {
-	return fmt.Sprintf("%x", uint64(*c))
+func (c Cell) String() string {
+	return fmt.Sprintf("%x", uint64(c))
 }
 
-func (c *Cell) Uint64() uint64 {
-	return uint64(*c)
+func (c Cell) Uint64() uint64 {
+	return uint64(c)
 }
 
-func CellFromString(str string) (*Cell, error) {
-	i, err := strconv.ParseUint(str, 16, 64)
-	if err != nil {
-		return nil, err
+func (c Cell) Parent(res uint8) Cell {
+	if c.Resolution() < res {
+		return 0
+	}
+	if c.Resolution() == res {
+		return c
 	}
 
-	cell := Cell(i)
-	return &cell, nil
+	u := uint64(c)
+
+	resfill := (^uint64(0)) >> (19 + res*3)
+	u |= resfill
+
+	mask := uint64(0b1111 << 52)
+	u &^= mask
+	u |= (uint64(res) << 52)
+
+	return Cell(u)
 }
 
-func MustCellFromString(str string) *Cell {
+func (c Cell) Resolution() uint8 {
+	return uint8((uint64(c) >> 52) & 0b1111)
+}
+
+func CellFromString(str string) (Cell, error) {
+	i, err := strconv.ParseUint(str, 16, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return Cell(i), nil
+}
+
+func MustCellFromString(str string) Cell {
 	c, err := CellFromString(str)
 	if err != nil {
 		log.Fatal(err)
@@ -53,16 +76,15 @@ func MustCellFromString(str string) *Cell {
 	return c
 }
 
-func LatLonToRes0ToCell(lat, lon float64) *Cell {
+func LatLonToRes0ToCell(lat, lon float64) Cell {
 	for res0, boundary := range res0map {
 		poly := geometry.NewPoly(boundary, nil, nil)
 		point := geometry.Point{X: lon, Y: lat}
 
 		if poly.ContainsPoint(point) {
-			cell := Cell(res0)
-			return &cell
+			return Cell(res0)
 		}
 	}
 
-	return nil
+	return 0
 }

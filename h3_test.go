@@ -57,3 +57,60 @@ func TestLatLonToRes0ToCell(t *testing.T) {
 		})
 	}
 }
+
+func TestCell_Resolution(t *testing.T) {
+	tests := []struct {
+		name string
+		c    Cell
+		want uint8
+	}{
+		{
+			name: "res5",
+			c:    MustCellFromString("85283473fffffff"),
+			want: 5,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.c.Resolution(); got != tt.want {
+				t.Errorf("Cell.Resolution() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestCell_Parent(t *testing.T) {
+	type args struct {
+		res uint8
+	}
+	tests := []struct {
+		name string
+		c    Cell
+		args args
+		want Cell
+	}{
+		{
+			name: "85283473fffffff to res4",
+			c:    MustCellFromString("85283473fffffff"),
+			args: args{
+				res: 4,
+			},
+			want: MustCellFromString("8428347ffffffff"),
+		},
+		{
+			name: "85283473fffffff to res0",
+			c:    MustCellFromString("85283473fffffff"),
+			args: args{
+				res: 0,
+			},
+			want: MustCellFromString("8029fffffffffff"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.c.Parent(tt.args.res); got != tt.want {
+				t.Errorf("Cell.Parent() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

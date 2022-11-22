@@ -3,6 +3,7 @@ module github.com/ThingsIXFoundation/h3-light
 go 1.19
 
 require (
+	github.com/ThingsIXFoundation/bitoffset v1.0.0 // indirect
 	github.com/gookit/color v1.5.2 // indirect
 	github.com/gookit/goutil v0.5.15 // indirect
 	github.com/tidwall/geoindex v1.4.4 // indirect

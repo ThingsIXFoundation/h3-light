@@ -1,3 +1,5 @@
+github.com/ThingsIXFoundation/bitoffset v1.0.0 h1:d1aiMjxiSGG+unH1DM9HXt+4+pEbbqHYqxMAQKcnD3I=
+github.com/ThingsIXFoundation/bitoffset v1.0.0/go.mod h1:r6KO5Gspfei9BMgBUgdJoKFWiar847wKgZcu5SnJ7As=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gookit/color v1.5.2 h1:uLnfXcaFjlrDnQDT+NCBcfhrXqYTx/rcCa6xn01Y8yI=
