@@ -34,7 +34,7 @@ func DatabaseCellFromCell(cell uint64) DatabaseCell {
 	buf := make([]byte, res+2)
 	buf[0] = hextable[byte((c >> 49) & 0b111)]
 	buf[1] = hextable[byte((c >> 45) & 0b1111)]
-	for i := uint8(1); i < res+1; i++ {
+	for i := 1; i < res+1; i++ {
 		buf[i+1] = hextable[byte( (c >> (45 - i * 3)) & 0b111)]
 	}
 
