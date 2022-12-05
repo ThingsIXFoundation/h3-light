@@ -27,7 +27,7 @@ const (
 		"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"
 )
 
-func DatabaseCellFromCell(cell uint64) DatabaseCell {
+func DatabaseCellFromCell(cell int64) DatabaseCell {
 	c := Cell(cell)
 	res := c.Resolution()
 
@@ -45,7 +45,7 @@ func (dc DatabaseCell) Resolution() int {
 	return len(dc)-2
 }
 
-func (dc DatabaseCell) Uint64() uint64 {
+func (dc DatabaseCell) Int64() int64 {
 	cell := uint64(0x800000000000000)
 
 	res := dc.Resolution()
@@ -66,11 +66,11 @@ func (dc DatabaseCell) Uint64() uint64 {
 		cell |= uint64(7) << (45 - i * 3)
 	}
 
-	return cell
+	return int64(cell)
 }
 
 func (dc DatabaseCell) Cell() Cell {
-	return Cell(dc.Uint64())
+	return Cell(dc.Int64())
 }
 
 func (dc DatabaseCell) Parent(res int) DatabaseCell {

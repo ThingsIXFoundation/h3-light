@@ -30,8 +30,8 @@ func (c Cell) String() string {
 	return fmt.Sprintf("%x", uint64(c))
 }
 
-func (c Cell) Uint64() uint64 {
-	return uint64(c)
+func (c Cell) Int64() int64 {
+	return int64(c)
 }
 
 func (c Cell) Parent(res int) Cell {
