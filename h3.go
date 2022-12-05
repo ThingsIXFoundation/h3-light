@@ -34,7 +34,7 @@ func (c Cell) Uint64() uint64 {
 	return uint64(c)
 }
 
-func (c Cell) Parent(res uint8) Cell {
+func (c Cell) Parent(res int) Cell {
 	if c.Resolution() < res {
 		return 0
 	}
@@ -49,13 +49,13 @@ func (c Cell) Parent(res uint8) Cell {
 
 	mask := uint64(0b1111 << 52)
 	u &^= mask
-	u |= (uint64(res) << 52)
+	u |= uint64(res) << 52
 
 	return Cell(u)
 }
 
-func (c Cell) Resolution() uint8 {
-	return uint8((uint64(c) >> 52) & 0b1111)
+func (c Cell) Resolution() int {
+	return int((uint64(c) >> 52) & 0b1111)
 }
 
 func CellFromString(str string) (Cell, error) {
