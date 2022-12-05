@@ -79,3 +79,7 @@ func MustCellFromString(str string) Cell {
 func LatLonToRes0ToCell(lat, lon float64) Cell {
 	return Cell(h3.FromGeo(h3.GeoCoord{Latitude: lat, Longitude: lon}, 0))
 }
+
+func LatLonToCell(lat, lon float64, res int) Cell {
+	return Cell(h3.FromGeo(h3.GeoCoord{Latitude: lat, Longitude: lon}, res))
+}

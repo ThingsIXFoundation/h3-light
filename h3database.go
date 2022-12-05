@@ -45,7 +45,7 @@ func (dc DatabaseCell) Resolution() int {
 	return len(dc)-2
 }
 
-func (dc DatabaseCell) ToCell() uint64 {
+func (dc DatabaseCell) Uint64() uint64 {
 	cell := uint64(0x800000000000000)
 
 	res := dc.Resolution()
@@ -67,6 +67,10 @@ func (dc DatabaseCell) ToCell() uint64 {
 	}
 
 	return cell
+}
+
+func (dc DatabaseCell) Cell() Cell {
+	return Cell(dc.Uint64())
 }
 
 func (dc DatabaseCell) Parent(res int) DatabaseCell {
