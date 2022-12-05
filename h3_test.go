@@ -58,6 +58,16 @@ func TestLatLonToRes0ToCell(t *testing.T) {
 	}
 }
 
+func TestLatLonToRes0ToCellAll(t *testing.T) {
+	for _, res0 := range h3.Res0Cells() {
+		computedRes0 := LatLonToRes0ToCell(res0.LatLng().Lat, res0.LatLng().Lng)
+		if res0.String() != computedRes0.String() {
+			t.Errorf("LatLonToRes0ToCell() = %v, want %v", computedRes0, res0)
+		}
+
+	}
+}
+
 func TestCell_Resolution(t *testing.T) {
 	tests := []struct {
 		name string

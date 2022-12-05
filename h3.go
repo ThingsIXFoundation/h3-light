@@ -21,7 +21,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/tidwall/geojson/geometry"
+	"github.com/Kl1mn/h3-go"
 )
 
 type Cell uint64
@@ -77,14 +77,5 @@ func MustCellFromString(str string) Cell {
 }
 
 func LatLonToRes0ToCell(lat, lon float64) Cell {
-	for res0, boundary := range res0map {
-		poly := geometry.NewPoly(boundary, nil, nil)
-		point := geometry.Point{X: lon, Y: lat}
-
-		if poly.ContainsPoint(point) {
-			return Cell(res0)
-		}
-	}
-
-	return 0
+	return Cell(h3.FromGeo(h3.GeoCoord{Latitude: lat, Longitude: lon}, 0))
 }
