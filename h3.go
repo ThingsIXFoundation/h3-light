@@ -83,3 +83,19 @@ func LatLonToRes0ToCell(lat, lon float64) Cell {
 func LatLonToCell(lat, lon float64, res int) Cell {
 	return Cell(h3.FromGeo(h3.GeoCoord{Latitude: lat, Longitude: lon}, res))
 }
+
+// MarshalText implements the encoding.TextMarshaler interface.
+func (c Cell) MarshalText() ([]byte, error) {
+	return []byte(c.String()), nil
+}
+
+// UnmarshalText implements the encoding.TextUnmarshaler interface.
+func (c *Cell) UnmarshalText(text []byte) error {
+	var err error
+	*c, err = CellFromString(string(text))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
