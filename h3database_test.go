@@ -1,10 +1,10 @@
-package h3light
+package h3light_test
 
 import (
 	"testing"
+
+	. "github.com/ThingsIXFoundation/h3-light"
 )
-
-
 
 func TestDatabaseCellFromCell(t *testing.T) {
 	type args struct {
@@ -36,7 +36,7 @@ func TestDatabaseCellFromCell(t *testing.T) {
 			want: "0c153",
 		},
 	}
-		for _, tt := range tests {
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := DatabaseCellFromCell(tt.args.cell); got != tt.want {
 				t.Errorf("DatabaseCellFromCell() = %v, want %v", got, tt.want)
@@ -53,18 +53,18 @@ func TestDatabaseCell_ToCell(t *testing.T) {
 	}{
 		{
 			name: "test res5",
-			dc: DatabaseCellFromCell(uint64(MustCellFromString("85283473fffffff"))),
+			dc:   DatabaseCellFromCell(uint64(MustCellFromString("85283473fffffff"))),
 			want: uint64(MustCellFromString("85283473fffffff")),
 		},
 		{
 			name: "test res0",
-			dc: DatabaseCellFromCell(uint64(MustCellFromString("8019fffffffffff"))),
+			dc:   DatabaseCellFromCell(uint64(MustCellFromString("8019fffffffffff"))),
 			want: uint64(MustCellFromString("8019fffffffffff")),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.dc.ToCell(); got != tt.want {
+			if got := tt.dc.Cell(); uint64(got) != tt.want {
 				t.Errorf("ToCell() = %x, want %x", got, tt.want)
 			}
 		})

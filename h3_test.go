@@ -14,11 +14,12 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package h3light
+package h3light_test
 
 import (
 	"testing"
 
+	. "github.com/ThingsIXFoundation/h3-light"
 	"github.com/uber/h3-go/v4"
 )
 
@@ -72,7 +73,7 @@ func TestCell_Resolution(t *testing.T) {
 	tests := []struct {
 		name string
 		c    Cell
-		want uint8
+		want int
 	}{
 		{
 			name: "res5",
@@ -91,7 +92,7 @@ func TestCell_Resolution(t *testing.T) {
 
 func TestCell_Parent(t *testing.T) {
 	type args struct {
-		res uint8
+		res int
 	}
 	tests := []struct {
 		name string
