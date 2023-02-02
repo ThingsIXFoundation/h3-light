@@ -71,6 +71,16 @@ func (dc DatabaseCell) Cell() Cell {
 	return Cell(dc.Int64())
 }
 
+func (dc *DatabaseCell) CellPtr() *Cell {
+	if dc == nil {
+		return nil
+	}
+
+	ret := dc.Cell()
+
+	return &ret
+}
+
 func (dc DatabaseCell) Parent(res int) DatabaseCell {
 	if dc.Resolution() < res {
 		return ""

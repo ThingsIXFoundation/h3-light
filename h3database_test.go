@@ -70,3 +70,24 @@ func TestDatabaseCell_ToCell(t *testing.T) {
 		})
 	}
 }
+
+func TestDatabaseCell_CellPtr(t *testing.T) {
+	tests := []struct {
+		name string
+		dc   *DatabaseCell
+		want *Cell
+	}{
+		{
+			name: "test nil",
+			dc:   nil,
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.dc.CellPtr(); got != tt.want {
+				t.Errorf("DatabaseCell.CellPtr() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

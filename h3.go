@@ -54,6 +54,20 @@ func (c Cell) Parent(res int) Cell {
 	return Cell(u)
 }
 
+func (c Cell) DatabaseCell() DatabaseCell {
+	return DatabaseCellFromCell(uint64(c))
+}
+
+func (c *Cell) DatabaseCellPtr() *DatabaseCell {
+	if c == nil {
+		return nil
+	}
+
+	ret := c.DatabaseCell()
+
+	return &ret
+}
+
 func (c Cell) Resolution() int {
 	return int((uint64(c) >> 52) & 0b1111)
 }
