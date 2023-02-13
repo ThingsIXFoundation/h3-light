@@ -17,6 +17,7 @@
 package h3light_test
 
 import (
+	"math"
 	"testing"
 
 	. "github.com/ThingsIXFoundation/h3-light"
@@ -121,6 +122,39 @@ func TestCell_Parent(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.c.Parent(tt.args.res); got != tt.want {
 				t.Errorf("Cell.Parent() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestCell_LatLon(t *testing.T) {
+	tests := []struct {
+		name string
+		c    Cell
+		lat  float64
+		lon  float64
+	}{
+		{
+			name: "801ffffffffffff",
+			c:    MustCellFromString("801ffffffffffff"),
+			lat:  h3.Cell(h3.IndexFromString("801ffffffffffff")).LatLng().Lat,
+			lon:  h3.Cell(h3.IndexFromString("801ffffffffffff")).LatLng().Lng,
+		},
+		{
+			name: "85283473fffffff",
+			c:    MustCellFromString("85283473fffffff"),
+			lat:  h3.Cell(h3.IndexFromString("85283473fffffff")).LatLng().Lat,
+			lon:  h3.Cell(h3.IndexFromString("85283473fffffff")).LatLng().Lng,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			lat, lon := tt.c.LatLon()
+			if math.Abs(lat-tt.lat) > 0.000000001 {
+				t.Errorf("Cell.LatLon() got = %v, want %v (diff %v)", lat, tt.lat, math.Abs(lat-tt.lat))
+			}
+			if math.Abs(lon-tt.lon) > 0.000000001 {
+				t.Errorf("Cell.LatLon() got = %v, want %v (diff %v)", lon, tt.lon, math.Abs(lon-tt.lon))
 			}
 		})
 	}

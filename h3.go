@@ -54,6 +54,11 @@ func (c Cell) Parent(res int) Cell {
 	return Cell(u)
 }
 
+func (c Cell) LatLon() (float64, float64) {
+	geo := h3.ToGeo(h3.H3Index(c))
+	return geo.Latitude, geo.Longitude
+}
+
 func (c Cell) DatabaseCell() DatabaseCell {
 	return DatabaseCellFromCell(uint64(c))
 }
