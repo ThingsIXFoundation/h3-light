@@ -18,9 +18,12 @@ package h3light_test
 
 import (
 	"math"
+	"reflect"
 	"testing"
 
+	//"github.com/Kl1mn/h3-go"
 	. "github.com/ThingsIXFoundation/h3-light"
+	h3light "github.com/ThingsIXFoundation/h3-light"
 	"github.com/uber/h3-go/v4"
 )
 
@@ -155,6 +158,34 @@ func TestCell_LatLon(t *testing.T) {
 			}
 			if math.Abs(lon-tt.lon) > 0.000000001 {
 				t.Errorf("Cell.LatLon() got = %v, want %v (diff %v)", lon, tt.lon, math.Abs(lon-tt.lon))
+			}
+		})
+	}
+}
+
+func h3CellsToH3LightCells(cells []h3.Cell) []h3light.Cell {
+	ret := make([]h3light.Cell, len(cells))
+	for i, c := range cells {
+		ret[i] = h3light.Cell(c)
+	}
+
+	return ret
+}
+
+func TestGetRes0Cells(t *testing.T) {
+	tests := []struct {
+		name string
+		want []Cell
+	}{
+		{
+			"test",
+			h3CellsToH3LightCells(h3.Res0Cells()),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := GetRes0Cells(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("GetRes0Cells() = %v, want %v", got, tt.want)
 			}
 		})
 	}
